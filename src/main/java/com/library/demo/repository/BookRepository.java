@@ -9,4 +9,5 @@ import com.library.demo.model.Book;
 @Repository
 public interface  BookRepository extends JpaRepository<Book,Long>{
     //Add custom queries as per the requirement
+    
 }
