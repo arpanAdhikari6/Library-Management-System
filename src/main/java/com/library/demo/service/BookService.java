@@ -1,15 +1,12 @@
 package com.library.demo.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import  com.library.demo.model.Book;
-import com.library.demo.repository.BookRepository;
 import org.springframework.stereotype.Service;
-import  org.springframework.web.bind.annotation.*;
+
+import  com.library.demo.exception.ResourceNotFoundException;
+import com.library.demo.model.Book;
+import com.library.demo.repository.BookRepository;
 
 @Service
 public class BookService {
@@ -26,19 +23,23 @@ public class BookService {
         return bookRepository.findAll();
     }
     //reading book using id
-    public  Optional<Book> getBookById(@PathVariable Long Id){
-        return bookRepository.findById(Id);
+    public  Book getBookById( Long Id){
+        return  bookRepository.findById(Id)
+        .orElseThrow(()-> new ResourceNotFoundException("Book not found with id:"+Id));
+        
     }
-    public void DeleteBook(@PathVariable Long Id){
-        bookRepository.deleteById(Id);
+    public void deleteBook( Long Id){
+        Book existingBook=bookRepository.findById(Id)
+        .orElseThrow(()-> new ResourceNotFoundException("Book not found with id:"+Id));
+        bookRepository.delete(existingBook);
     }
-    public Book createBook(@RequestBody Book book){
+    public Book createBook( Book book){
         return bookRepository.save(book);
     }
 
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book){
+    public Book updateBook( Long id,  Book book){
         Book existingBook=bookRepository.findById(id)
-        .orElseThrow(()-> new RuntimeException("Book not found with id:"+id));
+        .orElseThrow(()-> new ResourceNotFoundException("Book not found with id:"+id));
 
         existingBook.setTitle(book.getTitle());
         existingBook.setauthor(book.getauthor());

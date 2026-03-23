@@ -1,12 +1,11 @@
 package com.library.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import  org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import  org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +28,7 @@ public class bookController {
     }
      //getting  the book by id
     @GetMapping("/{id}")
-    public Optional<Book> getBookById(@PathVariable Long id ){
+    public Book getBookById(@PathVariable Long id ){
         return bookService.getBookById(id);
     }
 
@@ -43,7 +42,7 @@ public class bookController {
     }
     @DeleteMapping("/{id}")
     public String DeleteBook(@PathVariable Long id){
-        bookService.DeleteBook(id);
+        bookService.deleteBook(id);
         return  ("Book deleted successfully with id:"+id);
     }
 }
