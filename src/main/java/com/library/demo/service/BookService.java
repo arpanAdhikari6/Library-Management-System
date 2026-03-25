@@ -44,7 +44,7 @@ public class BookService {
         existingBook.setTitle(book.getTitle());
         existingBook.setauthor(book.getauthor());
         existingBook.setGenre(book.getGenre());
-        existingBook.setAvailable(book.getAvailable());
+        existingBook.setAvailable(book.isAvailable());
         return bookRepository.save(existingBook);
     }
     

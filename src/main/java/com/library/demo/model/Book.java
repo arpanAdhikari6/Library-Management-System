@@ -5,24 +5,33 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="books")
 public  class Book{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    @NotBlank(message = "Title is required")
     private String title;
+    @NotBlank(message = "Author is required")
     private  String author;
+    @NotBlank(message = "Genre is required")
     private String genre;
     private boolean  available=true;
+    @Min(value = 1000, message = "Year must be valid")
+    @Max(value = 9999, message = "Year must be valid")
+    private int publishedYear;
 
     public Book(){}
     public Book(String title, String author, String genre){
         this.title=title;
         this.author=author;
         this.genre=genre; 
-        this.available=available;
+        this.available=true;
     }
     //Getters and setters
     public Long getId() {
@@ -53,11 +62,19 @@ public  class Book{
         this.genre=Genre;
     }
 
-    public boolean getAvailable() {
+    public boolean isAvailable() { 
         return available;
     }
-    public void setAvailable(Boolean Available){
-        this.available=Available;
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
+    public int getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(int publishedYear) {
+        this.publishedYear = publishedYear;
+    }
 }
